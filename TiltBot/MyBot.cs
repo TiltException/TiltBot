@@ -12,6 +12,7 @@ namespace TiltBot
 {
     class MyBot
     {
+        
         private IRiotClient _riotClient;
         private DiscordClient _client;
         private CommandService _commands;
@@ -52,20 +53,19 @@ namespace TiltBot
             {
                 await _client.Connect("MTk2MTEwNDMxMzUyMjU4NTYx.DCoPOg.YC0YH4qtzlynqoatEb9ppJeedRg", TokenType.Bot);
             });
-
         }
 
         public void CreateCommands()
         {
             _commands = _client.GetService<CommandService>();
 
-            _commands.CreateCommand("Alex")
-               .Do(async (e) =>
-               {
-                   await e.Channel.SendTTSMessage("WATCH BOKU NO HERO ACADEMIA ALEX");
-                   await e.Channel.SendTTSMessage("WATCH BOKU NO HERO ACADEMIA ALEX");
-                   await e.Channel.SendTTSMessage("WATCH BOKU NO HERO ACADEMIA ALEX");
-               });
+            _commands.CreateCommand("summoner")
+                .Parameter("summonerToFind", ParameterType.Required)
+                .Do( async e =>
+                {
+                    var player = _riotClient.Summoner.GetSummonersByName(RiotApiConfig.Regions.NA, e.GetArg("summonerToFind")).Single();
+                    await e.Channel.SendMessage($"{player.Value.Name} is Level {player.Value.SummonerLevel}");
+                });
         }
 
         public void Log(object sender, LogMessageEventArgs e)
