@@ -10,7 +10,9 @@ namespace TiltBot
     {
         static void Main(string[] args)
         {
-            var bot = new MyBot();
+            var twitchBot = new TwitchBot();
+            twitchBot.Connect();
+            Console.ReadKey();
         }
     }
 }
