@@ -44,7 +44,7 @@ namespace TiltBot
 
         private void TwitchClient_OnChatCommandReceived(object sender, OnChatCommandReceivedArgs e)
         {
-            if (e.Command.Command == "hi")
+            if (e.Command.CommandText == "hi")
                 twitchClient.SendMessage($"Salutations, {e.Command.ChatMessage.DisplayName}");
         }
         #endregion
